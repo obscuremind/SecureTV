@@ -126,7 +126,7 @@ fun MovieGrid(
                 for (movie in row) {
                     ContentCard(
                         title = movie.name,
-                        imageUrl = movie.streamIcon ?: movie.coverUrl,
+                        imageUrl = movie.streamIcon ?: movie.cover,
                         isFavorite = favorites.contains(movie.streamId.toString()),
                         onFavoriteClick = { onFavoriteClick(movie.streamId.toString()) },
                         onClick = { onMovieClick(movie) },

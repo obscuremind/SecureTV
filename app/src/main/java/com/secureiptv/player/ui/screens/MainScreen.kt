@@ -37,7 +37,7 @@ fun MainScreen(
             }
         },
         topBar = {
-            TopAppBar(
+            androidx.compose.material.TopAppBar(
                 title = { Text(TabItem.values()[selectedTab].title) },
                 actions = {
                     IconButton(onClick = { onLogout() }) {

@@ -288,7 +288,7 @@ fun SeriesDetails(
             }
             
             // Episodes by season
-            seriesInfo.episodes?.forEach { (season, episodes) ->
+            seriesInfo.seasons.forEach { (season, episodes) ->
                 var expanded by remember { mutableStateOf(false) }
                 
                 Column(

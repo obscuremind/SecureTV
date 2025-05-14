@@ -48,6 +48,20 @@ This document summarizes the fixes made to resolve build issues in the SecureTV 
    - Used Material components consistently throughout the TopAppBar implementation
    - Fixed Composable context issues by ensuring all UI components are properly wrapped
 
+## Dependency Conflict Fixes
+
+1. **Material3 Dependency Conflicts**
+   - Fixed duplicate class errors between Material3 versions (1.1.1 and 1.3.2)
+   - Added explicit dependency on Material (androidx.compose.material:material)
+   - Used configuration resolution strategy to force Material3 version 1.1.1
+   - Excluded conflicting Material3-android module
+
+2. **Lifecycle Library Conflicts**
+   - Fixed NullPointerException in lifecycle-livedata-core-2.8.3
+   - Added explicit dependency on lifecycle-livedata-core:2.6.1
+   - Used configuration resolution strategy to force lifecycle-livedata-core version 2.6.1
+   - Excluded conflicting lifecycle-livedata-core version 2.8.3
+
 ## Resource Fixes
 
 1. **Launcher Icons**

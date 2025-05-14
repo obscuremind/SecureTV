@@ -36,10 +36,19 @@ This document summarizes the fixes made to resolve build issues in the SecureTV 
 
 1. **SeriesScreen.kt**
    - Added public method `getSeriesInfo()` to MainViewModel to avoid direct repository access
-   - Fixed episode rendering issues
+   - Fixed episode rendering issues by changing `seriesInfo.episodes` to `seriesInfo.seasons`
 
 2. **MoviesScreen.kt**
-   - Changed `movie.movieImage` to `movie.coverUrl` to match the actual property name
+   - Changed `movie.coverUrl` to `movie.cover` to match the actual property name in the Movie data class
+
+3. **MainScreen.kt**
+   - Fixed experimental Material API warning by using fully qualified name `androidx.compose.material.TopAppBar` instead of the Material3 version
+
+## Resource Fixes
+
+1. **Launcher Icons**
+   - Added missing launcher icons in multiple densities (mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
+   - Created both regular and round versions of the launcher icon
 
 ## Syntax Fixes
 
@@ -56,3 +65,6 @@ This document summarizes the fixes made to resolve build issues in the SecureTV 
 
 2. **SETUP.md**
    - Added detailed instructions for Java 8 compatibility
+
+3. **FIXES.md**
+   - Created comprehensive documentation of all fixes applied to the project

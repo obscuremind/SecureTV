@@ -43,8 +43,9 @@ This document summarizes the fixes made to resolve build issues in the SecureTV 
 
 3. **MainScreen.kt**
    - Fixed experimental Material API warning by properly importing and using Material components
-   - Added proper imports for Material components (TopAppBar, Text, Icon, IconButton)
-   - Used aliased imports to avoid conflicts with Material3 components
+   - Added direct imports for Material components (TopAppBar, Text, Icon, IconButton)
+   - Removed aliased imports that were causing unresolved reference errors
+   - Used Material components consistently throughout the TopAppBar implementation
    - Fixed Composable context issues by ensuring all UI components are properly wrapped
 
 ## Resource Fixes

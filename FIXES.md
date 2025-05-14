@@ -42,7 +42,10 @@ This document summarizes the fixes made to resolve build issues in the SecureTV 
    - Changed `movie.coverUrl` to `movie.cover` to match the actual property name in the Movie data class
 
 3. **MainScreen.kt**
-   - Fixed experimental Material API warning by using fully qualified name `androidx.compose.material.TopAppBar` instead of the Material3 version
+   - Fixed experimental Material API warning by properly importing and using Material components
+   - Added proper imports for Material components (TopAppBar, Text, Icon, IconButton)
+   - Used aliased imports to avoid conflicts with Material3 components
+   - Fixed Composable context issues by ensuring all UI components are properly wrapped
 
 ## Resource Fixes
 

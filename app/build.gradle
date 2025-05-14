@@ -5,6 +5,14 @@ plugins {
     id 'kotlin-kapt'
 }
 
+// Explicitly set kapt JVM target
+kapt {
+    javacOptions {
+        option("-source", "11")
+        option("-target", "11")
+    }
+}
+
 android {
     namespace 'com.secureiptv.player'
     compileSdk 34

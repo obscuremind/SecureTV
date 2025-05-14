@@ -8,11 +8,11 @@ plugins {
 // Explicitly set kapt and kotlin compiler options
 kapt {
     javacOptions {
-        option("-source", "11")
-        option("-target", "11")
+        option("-source", "8")
+        option("-target", "8")
     }
     arguments {
-        arg("kotlinJvmTarget", "11")
+        arg("kotlinJvmTarget", "1.8")
     }
     correctErrorTypes = true
 }
@@ -45,7 +45,7 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = rootProject.ext.jvm_target_version
+        jvmTarget = '1.8'
         freeCompilerArgs += ["-Xjvm-default=all"]
     }
     buildFeatures {

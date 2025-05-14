@@ -8,8 +8,8 @@ plugins {
 // Explicitly set kapt and kotlin compiler options
 kapt {
     javacOptions {
-        option("-source", "8")
-        option("-target", "8")
+        option("-source", "1.8")
+        option("-target", "1.8")
     }
     arguments {
         arg("kotlinJvmTarget", "1.8")

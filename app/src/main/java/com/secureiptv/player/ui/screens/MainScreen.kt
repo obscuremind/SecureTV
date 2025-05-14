@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material.Text as MaterialText
+import androidx.compose.material.Icon as MaterialIcon
+import androidx.compose.material.IconButton as MaterialIconButton
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -37,11 +41,11 @@ fun MainScreen(
             }
         },
         topBar = {
-            androidx.compose.material.TopAppBar(
-                title = { Text(TabItem.values()[selectedTab].title) },
+            TopAppBar(
+                title = { MaterialText(TabItem.values()[selectedTab].title) },
                 actions = {
-                    IconButton(onClick = { onLogout() }) {
-                        Icon(
+                    MaterialIconButton(onClick = { onLogout() }) {
+                        MaterialIcon(
                             imageVector = Icons.Default.Logout,
                             contentDescription = "Logout"
                         )

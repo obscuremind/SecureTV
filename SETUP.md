@@ -37,3 +37,11 @@ If you still encounter issues with JVM target compatibility, try:
 1. Invalidate caches and restart Android Studio (File > Invalidate Caches / Restart)
 2. Delete the .gradle folder in the project directory and rebuild
 3. Ensure your JAVA_HOME environment variable points to a Java 11 installation
+
+### Specific Error: No enum constant org.jetbrains.kotlin.gradle.plugin.PropertiesProvider.JvmTargetValidationMode.WARNING
+
+If you encounter this error, it means the Kotlin Gradle plugin doesn't recognize the validation mode. We've updated the project to use `ignore` mode instead of `warning`. If you still see this error, try:
+
+1. Make sure you've pulled the latest changes from the repository
+2. Check that gradle.properties contains `kotlin.jvm.target.validation.mode=ignore`
+3. Restart Android Studio after making these changes

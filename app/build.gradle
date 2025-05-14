@@ -66,6 +66,7 @@ dependencies {
     // Core Android
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-core:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.2'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
     implementation "androidx.navigation:navigation-compose:2.6.0"
@@ -74,7 +75,21 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation "androidx.compose.material3:material3:1.1.1"
+    implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    
+    // Resolve dependency conflicts
+    configurations.all {
+        resolutionStrategy {
+            // Force specific versions to avoid conflicts
+            force "androidx.compose.material3:material3:1.1.1"
+            force "androidx.lifecycle:lifecycle-livedata-core:2.6.1"
+            
+            // Exclude conflicting versions
+            exclude group: "androidx.compose.material3", module: "material3-android"
+            exclude group: "androidx.lifecycle", module: "lifecycle-livedata-core", version: "2.8.3"
+        }
+    }
     
     // Firebase
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")

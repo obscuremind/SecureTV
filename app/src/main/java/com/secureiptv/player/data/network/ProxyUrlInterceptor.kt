@@ -2,7 +2,7 @@ package com.secureiptv.player.data.network
 
 import com.secureiptv.player.IPTVApplication
 import com.secureiptv.player.data.security.CredentialManager
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -33,7 +33,7 @@ class ProxyUrlInterceptor : Interceptor {
         
         // Add the real host as a header for the proxy to use
         val requestWithRealHost = newRequest.newBuilder()
-            .header("Host", HttpUrl.parse(realDns)?.host() ?: "")
+            .header("Host", realDns.toHttpUrl().host)
             .header("X-Real-IP", "127.0.0.1")
             .header("X-Forwarded-For", "127.0.0.1")
             .build()
@@ -46,15 +46,15 @@ class ProxyUrlInterceptor : Interceptor {
         realDns: String,
         proxyBaseUrl: String
     ): Request {
-        val originalUrl = originalRequest.url()
-        val realDnsUrl = HttpUrl.parse(realDns) ?: return originalRequest
-        val proxyUrl = HttpUrl.parse(proxyBaseUrl) ?: return originalRequest
+        val originalUrl = originalRequest.url
+        val realDnsUrl = realDns.toHttpUrl()
+        val proxyUrl = proxyBaseUrl.toHttpUrl()
         
         // Build a new URL that uses the proxy domain but keeps the path and query from the original
         val newUrl = originalUrl.newBuilder()
-            .scheme(proxyUrl.scheme())
-            .host(proxyUrl.host())
-            .port(proxyUrl.port())
+            .scheme(proxyUrl.scheme)
+            .host(proxyUrl.host)
+            .port(proxyUrl.port)
             .build()
         
         return originalRequest.newBuilder()

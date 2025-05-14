@@ -250,6 +250,13 @@ class MainViewModel : ViewModel() {
     }
     
     /**
+     * Gets series info
+     */
+    suspend fun getSeriesInfo(seriesId: Int): Result<com.secureiptv.player.data.models.SeriesInfo> {
+        return repository.getSeriesInfo(seriesId)
+    }
+    
+    /**
      * Logs out the user
      */
     fun logout() {

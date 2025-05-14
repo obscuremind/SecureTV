@@ -110,7 +110,8 @@ fun SeriesScreen(
                             selectedSeries = series
                             coroutineScope.launch {
                                 try {
-                                    val result = viewModel.repository.getSeriesInfo(series.seriesId)
+                                    // Use a public method in the ViewModel instead of accessing repository directly
+                                    val result = viewModel.getSeriesInfo(series.seriesId)
                                     result.fold(
                                         onSuccess = { info ->
                                             seriesInfo = info

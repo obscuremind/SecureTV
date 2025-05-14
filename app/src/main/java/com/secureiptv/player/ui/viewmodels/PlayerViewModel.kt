@@ -1,6 +1,7 @@
 package com.secureiptv.player.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -52,7 +53,7 @@ class PlayerViewModel : ViewModel() {
                     }
                 }
                 
-                override fun onPlayerError(error: com.google.android.exoplayer2.ExoPlaybackException) {
+                override fun onPlayerError(error: com.google.android.exoplayer2.PlaybackException) {
                     _playerState.value = PlayerState.Error(error.message ?: "Playback error")
                 }
             })
@@ -69,7 +70,7 @@ class PlayerViewModel : ViewModel() {
             val subtitleConfig = MediaItem.SubtitleConfiguration.Builder(android.net.Uri.parse(subtitleUrl))
                 .setMimeType(MimeTypes.APPLICATION_SUBRIP)
                 .setLanguage("en")
-                .setSelectionFlags(MediaItem.SubtitleConfiguration.SELECTION_FLAG_DEFAULT)
+                .setSelectionFlags(C.SELECTION_FLAG_DEFAULT)
                 .build()
                 
             MediaItem.Builder()

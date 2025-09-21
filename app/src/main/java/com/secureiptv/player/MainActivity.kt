@@ -65,20 +65,26 @@ fun IPTVApp() {
                         popUpTo("main") { inclusive = true }
                     }
                 },
-                onNavigateToPlayer = { streamUrl, title ->
+                onNavigateToPlayer = { streamUrl, torrentUrl, title ->
                     val encodedUrl = URLEncoder.encode(streamUrl, StandardCharsets.UTF_8.toString())
                     val encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8.toString())
-                    navController.navigate("player/$encodedUrl/$encodedTitle")
+                    val encodedTorrent = URLEncoder.encode(torrentUrl ?: "", StandardCharsets.UTF_8.toString())
+                    navController.navigate("player?streamUrl=$encodedUrl&title=$encodedTitle&torrentUrl=$encodedTorrent")
                 },
                 viewModel = mainViewModel
             )
         }
-        
+
         composable(
-            "player/{streamUrl}/{title}",
+            "player?streamUrl={streamUrl}&title={title}&torrentUrl={torrentUrl}",
             arguments = listOf(
                 navArgument("streamUrl") { type = NavType.StringType },
-                navArgument("title") { type = NavType.StringType }
+                navArgument("title") { type = NavType.StringType },
+                navArgument("torrentUrl") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                    nullable = true
+                }
             )
         ) { backStackEntry ->
             val streamUrl = java.net.URLDecoder.decode(
@@ -89,9 +95,15 @@ fun IPTVApp() {
                 backStackEntry.arguments?.getString("title") ?: "",
                 StandardCharsets.UTF_8.toString()
             )
-            
+            val torrentUrlArg = backStackEntry.arguments?.getString("torrentUrl")
+            val torrentUrl = torrentUrlArg?.let {
+                val decoded = java.net.URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
+                if (decoded.isBlank()) null else decoded
+            }
+
             PlayerScreen(
                 streamUrl = streamUrl,
+                torrentUrl = torrentUrl,
                 title = title,
                 onBackClick = {
                     navController.popBackStack()

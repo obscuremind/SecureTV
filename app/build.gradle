@@ -107,6 +107,9 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
     implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayer_version"
     implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
+
+    // Torrent streaming
+    implementation 'com.github.TorrentStream:TorrentStream-Android:2.7.0'
     
     // Security
     implementation "androidx.security:security-crypto:$security_crypto_version"

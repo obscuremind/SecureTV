@@ -20,7 +20,7 @@ import com.secureiptv.player.ui.viewmodels.MainViewModel
 @Composable
 fun MainScreen(
     onLogout: () -> Unit,
-    onNavigateToPlayer: (String, String) -> Unit,
+    onNavigateToPlayer: (String, String?, String) -> Unit,
     viewModel: MainViewModel = viewModel()
 ) {
     var selectedTab by remember { mutableStateOf(0) }
@@ -63,22 +63,22 @@ fun MainScreen(
                 0 -> LiveTVScreen(
                     viewModel = viewModel,
                     onStreamClick = { stream ->
-                        val streamUrl = viewModel.getLiveStreamUrl(stream.streamId)
-                        onNavigateToPlayer(streamUrl, stream.name)
+                        val streamSource = viewModel.getLiveStreamSource(stream)
+                        onNavigateToPlayer(streamSource.httpUrl, streamSource.torrentUrl, stream.name)
                     }
                 )
                 1 -> MoviesScreen(
                     viewModel = viewModel,
                     onMovieClick = { movie ->
-                        val streamUrl = viewModel.getVodStreamUrl(movie.streamId)
-                        onNavigateToPlayer(streamUrl, movie.name)
+                        val streamSource = viewModel.getVodStreamSource(movie)
+                        onNavigateToPlayer(streamSource.httpUrl, streamSource.torrentUrl, movie.name)
                     }
                 )
                 2 -> SeriesScreen(
                     viewModel = viewModel,
                     onEpisodeClick = { episode ->
-                        val streamUrl = viewModel.getSeriesStreamUrl(episode.id)
-                        onNavigateToPlayer(streamUrl, episode.title)
+                        val streamSource = viewModel.getSeriesStreamSource(episode)
+                        onNavigateToPlayer(streamSource.httpUrl, streamSource.torrentUrl, episode.title)
                     }
                 )
                 3 -> FavoritesScreen(
@@ -89,7 +89,7 @@ fun MainScreen(
                             MainViewModel.ItemType.VOD -> viewModel.getVodStreamUrl(item.streamId)
                             MainViewModel.ItemType.SERIES -> viewModel.getSeriesStreamUrl(item.streamId)
                         }
-                        onNavigateToPlayer(streamUrl, item.title)
+                        onNavigateToPlayer(streamUrl, null, item.title)
                     }
                 )
             }

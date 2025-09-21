@@ -3,9 +3,11 @@ package com.secureiptv.player.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.secureiptv.player.data.models.Category
+import com.secureiptv.player.data.models.Episode
 import com.secureiptv.player.data.models.LiveStream
 import com.secureiptv.player.data.models.Movie
 import com.secureiptv.player.data.models.Series
+import com.secureiptv.player.data.models.StreamSource
 import com.secureiptv.player.data.repository.IPTVRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -234,19 +236,43 @@ class MainViewModel : ViewModel() {
     fun getLiveStreamUrl(streamId: Int): String {
         return repository.buildLiveStreamUrl(streamId)
     }
-    
+
+    /**
+     * Builds the available sources for a live stream
+     */
+    fun getLiveStreamSource(stream: LiveStream): StreamSource {
+        val httpUrl = getLiveStreamUrl(stream.streamId)
+        return buildStreamSource(httpUrl, stream.directSource)
+    }
+
     /**
      * Gets a VOD stream URL
      */
     fun getVodStreamUrl(streamId: Int): String {
         return repository.buildVodStreamUrl(streamId)
     }
-    
+
+    /**
+     * Builds the available sources for a movie
+     */
+    fun getVodStreamSource(movie: Movie): StreamSource {
+        val httpUrl = getVodStreamUrl(movie.streamId)
+        return buildStreamSource(httpUrl, movie.directSource)
+    }
+
     /**
      * Gets a series stream URL
      */
     fun getSeriesStreamUrl(streamId: Int): String {
         return repository.buildSeriesStreamUrl(streamId)
+    }
+
+    /**
+     * Builds the available sources for an episode
+     */
+    fun getSeriesStreamSource(episode: Episode): StreamSource {
+        val httpUrl = getSeriesStreamUrl(episode.id)
+        return buildStreamSource(httpUrl, episode.directSource)
     }
     
     /**
@@ -323,5 +349,26 @@ class MainViewModel : ViewModel() {
      */
     enum class ItemType {
         LIVE, VOD, SERIES
+    }
+
+    private fun buildStreamSource(httpUrl: String, directSource: String?): StreamSource {
+        return StreamSource(
+            httpUrl = httpUrl,
+            torrentUrl = extractTorrentUrl(directSource)
+        )
+    }
+
+    private fun extractTorrentUrl(directSource: String?): String? {
+        val value = directSource?.trim().orEmpty()
+        if (value.isEmpty()) {
+            return null
+        }
+
+        val lower = value.lowercase()
+        return if (lower.startsWith("magnet:") || lower.endsWith(".torrent")) {
+            value
+        } else {
+            null
+        }
     }
 }
